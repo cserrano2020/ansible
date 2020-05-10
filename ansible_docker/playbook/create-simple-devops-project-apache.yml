@@ -1,0 +1,8 @@
+---
+  
+- name: Starting Deploy - create-simple-devops-project-apache
+  hosts: servidores
+  roles:
+    - apache_project
+...
+    

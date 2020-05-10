@@ -1,0 +1,75 @@
+---
+
+- name: Recursively remove directory /opt/docker/
+  file:
+    path: /opt/docker/
+    state: absent
+
+- name: Create directory /opt/docker/
+  file:
+    path: /opt/docker/
+    state: directory   
+    
+- name: Recursively remove directory /opt/apache/
+  file:
+    path: /opt/apache
+    state: absent
+
+- name: Create directory /opt/docker/apache
+  file:
+    path: /opt/apache
+    state: directory   
+    
+- name: Clone GitHub Apache
+  git:
+    repo: https://github.com/cserrano2020/apache.git
+    version: master
+    dest:  /opt/apache
+    accept_hostkey: yes  
+
+- name: Recursively remove directory /opt/docker/dockercontainer
+  file:
+    path: /opt/dockercontainer
+    state: absent
+
+- name: Create directory /opt/docker/dockercontainer
+  file:
+    path: /opt/dockercontainer
+    state: directory
+    
+- name: Copy index.html /opt/dockercontainer/
+  copy:
+    remote_src: yes
+    src: /opt/apache/index.html
+    dest: /opt/dockercontainer/index.html
+    force: yes
+ 
+- name: Copy Dockerfile /opt/docker/
+  copy:
+    src: ./Dockerfile
+    dest: /opt/docker/
+    force: yes
+
+- name: Create docker image apache
+  docker_image:
+    name: simple-devops-image-apache
+    build:
+     path: /opt/docker    
+    tag: latest
+    source: build 
+
+- name: Create tag and push image
+  docker_image:
+    name: simple-devops-image-apache
+    repository: cserrano2020/docker_public:simple-devops-image-apache-v1
+    push: yes    
+
+- name: Remove image local
+  docker_image:
+    state: absent
+    name: simple-devops-image-apache
+    tag: latest
+    force_absent: yes
+
+
+...

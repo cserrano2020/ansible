@@ -1,0 +1,32 @@
+---
+
+- name: Remove current running container
+  docker_container:
+    name: simple-devops-container-apache
+    state: absent
+    force_kill: yes
+    
+- name: Remove docker image
+  docker_image:
+    state: absent
+    name: cserrano2020/docker_public
+    tag: simple-devops-image-apache-v1
+    force_absent: yes
+
+- name: Pull image from Docker Hub
+  docker_image:
+    name: cserrano2020/docker_public:simple-devops-image-apache-v1
+    source: pull
+
+- name: Create container using simple-devops-image
+  docker_container:
+    name: simple-devops-container-apache
+    image: cserrano2020/docker_public:simple-devops-image-apache-v1
+    state: started
+    volumes: 
+      - /opt/dockercontainer/:/usr/local/apache2/htdocs/
+    recreate: yes
+    ports:
+      - "80:80"
+
+...

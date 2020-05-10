@@ -1,0 +1,8 @@
+---
+  
+- name: Starting Deploy - create-simple-devops-image-apache
+  hosts: servidores
+  roles:
+    - apache_image
+...
+    
