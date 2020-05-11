@@ -3,7 +3,7 @@
 # Projeto Apache
 Esse projeto contempla a utilização do Ansible, Docker, Docker Hub e Git para provisionar uma container Alpine com Apache com a página index.html elaborada pelo time de desenvolvimento.
 
-# Requirements
+# Requirementos
 Ansible 2.9.7
 Docker version 19.03.8
 Conta no Git e Docker Hub
@@ -30,6 +30,6 @@ Nesse passo iremos remover um container existente, remover a imagem local, baixa
 
 Com esses dois playbooks, podemos utilizar o Jenkis em nosso pipeline, após o commit do desenvolvedor no repositório da página, o Job do Jenkins poderá rodar os playbooks novamente mantendo sempre o container atualizado.
 
-# Author Information
+# Autor
 Carlos Henrique Serrano
 www.linkedin.com/in/carloshenriqueserrano
